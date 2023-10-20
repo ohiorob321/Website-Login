@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Main Page</title>
+    <style>
+        body {
+            background-color: black;
+            color: red;
+            text-align: center;
+        }
+
+        #mainPage, #loginForm, #registerForm, #welcomeMessage {
+            display: block;
+            margin-top: 50px;
+        }
+
+        #loginForm, #registerForm {
+            display: none;
+        }
+
+        .big-button {
+            background-color: black;
+            color: red;
+            font-size: 24px;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .black-text {
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <div id="mainPage">
+        <h1>Welcome to Test Hub!</h1>
+        <button id="loginButton" class="big-button" onclick="showLoginForm()">Login</button>
+        <button id="registerButton" class="big-button" onclick="showRegisterForm()">Register</button>
+    </div>
+    
+    <div id="loginForm">
+        <h2>Login</h2>
+        <form id="login" onsubmit="return checkLogin()">
+            Username: <input type="text" id="loginUsername" placeholder="Username"><br>
+            Password: <input type="password" id="loginPassword" placeholder="Password">
+            <button type="button" class="black-text" onclick="togglePassword('loginPassword')">Show/Hide</button><br>
+            <input type="submit" value="Login" class="big-button">
+        </form>
+        <button id="backButtonLogin" class="big-button" onclick="goToMainPage()">Back</button>
+    </div>
+
+    <div id="registerForm">
+        <h2>Register</h2>
+        <form id="register" onsubmit="return registerUser()">
+            Username (3-20 characters): <input type="text" id="registerUsername" placeholder="Username"><br>
+            Email: <input type="email" id="email" placeholder="Email"><br>
+            Password: <input type="password" id="registerPassword" placeholder="Password">
+            <button type="button" class="black-text" onclick="togglePassword('registerPassword')">Show/Hide</button><br>
+            Age: <input type="number" id="age" placeholder="Age"><br>
+            <input type="submit" value="Register" class="big-button">
+        </form>
+        <button id="backButtonRegister" class "big-button" onclick="goToMainPage()">Back</button>
+    </div>
+
+    <div id="welcomeMessage" style="display: none;">
+        <button id="logoutButton" class="big-button" onclick="logoutUser()">Logout</button>
+        Welcome, <span id="userWelcomeMessage"></span>
+    </div>
+
+    <button id="backButtonWelcome" class="big-button" onclick="goToMainPage()" style="display: none;">Back</button>
+
+    <script>
+        // Define JavaScript functions here
+        var loggedInUser = null;
+
+        function showLoginForm() {
+            document.getElementById("mainPage").style.display = "none";
+            document.getElementById("loginForm").style.display = "block";
+        }
+
+        function showRegisterForm() {
+            document.getElementById("mainPage").style.display = "none";
+            document.getElementById("registerForm").style.display = "block";
+        }
+
+        function checkLogin() {
+            // Check login here
+            // ...
+        }
+
+        function registerUser() {
+            var username = document.getElementById("registerUsername").value;
+            if (username.length < 3 || username.length > 20) {
+                alert("Username must be 3-20 characters long.");
+                return false;
+            }
+            
+            // Check for duplicate username (you may implement this logic here)
+            // ...
+
+            // Registration logic (you may save the user data in local storage)
+            // ...
+
+            alert("Registration successful!");
+            showWelcome();
+            return false;
+        }
+
+        function logoutUser() {
+            loggedInUser = null;
+            document.getElementById("welcomeMessage").style.display = "none";
+            document.getElementById("mainPage").style.display = "block";
+        }
+
+        function showWelcome() {
+            loggedInUser = document.getElementById("registerUsername").value;
+            document.getElementById("mainPage").style.display = "none";
+            document.getElementById("registerForm").style.display = "none";
+            document.getElementById("welcomeMessage").style.display = "block";
+            document.getElementById("userWelcomeMessage").textContent = " " + loggedInUser;
+        }
+
+        function goToMainPage() {
+            document.getElementById("mainPage").style.display = "block";
+            document.getElementById("loginForm").style.display = "none";
+            document.getElementById("registerForm").style display = "none";
+        }
+
+        function togglePassword(inputId) {
+            var passwordInput = document.getElementById(inputId);
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+            } else {
+                passwordInput.type = "password";
+            }
+        }
+
+        // Initialize page
+        document.getElementById("welcomeMessage").style.display = "none";
+        document.getElementById("backButtonWelcome").style.display = "none";
+    </script>
+</body>
+</html>
